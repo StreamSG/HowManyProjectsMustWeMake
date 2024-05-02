@@ -13,20 +13,23 @@ import { WeatherService } from 'src/app/services/weather.service';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit, OnDestroy {
+
+  @Input() safetyDocumentUpdated: boolean;
+
   public weatherAlertResponse: WeatherAlertResponse;
   public jobsResponse: JobsResponse;
   private techUUID: string;
   private jobServiceSubscription: Subscription;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   private jobCount: number;
-  @Input() safetyDocumentUpdated: boolean;
+
 
   constructor(private weatherService: WeatherService, private jobService: JobService) { }
 
   ngOnInit(): void {
-    this.safetyDocumentUpdated = true; // This is a boolean that will be used to determine if the safety document has been updated. This will be used to display an alert to the user on the homepage view using newSafetyDocumentUpdate component. (Chris)
     this.techUUID = 'mw224g'; // TODO - Make part of a sort of "login" feature. Aaron is working on this I believe, possibly a sort of modal.
     this.jobsResponse = this.jobService.getResults();
+    this.safetyDocumentUpdated = true; // This is a boolean that will be used to determine if the safety document has been updated. This will be used to display an alert to the user on the homepage view using newSafetyDocumentUpdate component. (Chris)
     if (!this.jobsResponse) { // don't call the api if it already has data
       this.callJobServiceJobs(this.techUUID);
     }
