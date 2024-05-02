@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.11.3",
     "moment": "^2.29.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

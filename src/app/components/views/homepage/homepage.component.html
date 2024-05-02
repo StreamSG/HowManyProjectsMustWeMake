@@ -1,6 +1,7 @@
 <ng-container *ngIf="weatherAlertResponse?.showAlertToast">
   <app-weather-alert [weatherAlert]="weatherAlertResponse"></app-weather-alert>
 </ng-container>
+<ng-container *ngIf="safetyDocumentUpdated"><app-newSafetyDocumentUpdate></app-newSafetyDocumentUpdate></ng-container>
 <div class="container pb-5">
   <div class="row mb-5">
     <div class="col text-center">
@@ -34,8 +35,9 @@
     </div>
   </div>
   <div class="row my-5">
-    <div class="col-9 d-grid"> 
-      <button type="button" class="btn btn-primary" [disabled]="!jobsResponse" (click)="onRequestJobButtonClick()">Request Job</button>
+    <div class="col-9 d-grid">
+      <button type="button" class="btn btn-primary" [disabled]="!jobsResponse"
+        (click)="onRequestJobButtonClick()">Request Job</button>
     </div>
     <div class="col-3 d-grid">
       <button type="button" class="btn btn-secondary" (click)="onRefreshJobList()">Refresh</button>

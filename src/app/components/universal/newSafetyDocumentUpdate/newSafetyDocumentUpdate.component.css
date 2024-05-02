@@ -1,0 +1,24 @@
+.container {
+
+  width: 80%;
+  height: 80%;
+
+}
+
+@media (max-width: 390px) {
+  .container {
+    width: 90%;
+    height: auto;
+    border: 8px dashed red;
+    border-radius: 3px;
+    margin: 10px auto;
+  }
+  .bi-cone-striped {
+    display: block;
+    margin: 0 auto;
+    color: orange;
+    font-size: 4em;
+  }
+
+
+}
