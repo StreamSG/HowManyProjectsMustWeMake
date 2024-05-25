@@ -19,6 +19,7 @@ export class NewSafetyDocumentUpdateComponent implements OnInit{
 
   public alertIconStyle: {[key: string]: string};
 
+  // TODO: Implement the checkSafetyDocumentUpdated method
   /**
    * @description This method is called when the safety document has been updated. It will display an alert to the user on the homepage view using newSafetyDocumentUpdate component.
    * @param {boolean} event
