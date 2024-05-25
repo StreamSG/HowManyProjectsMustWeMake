@@ -1,11 +1,14 @@
 <ng-container *ngIf="weatherAlertResponse?.showAlertToast">
   <app-weather-alert [weatherAlert]="weatherAlertResponse"></app-weather-alert>
 </ng-container>
+<ng-container *ngIf="safetyDocumentUpdated">
+  <app-Safety-Document-Update></app-Safety-Document-Update>
+</ng-container>
 <div class="container pb-5">
   <div class="row mb-5">
     <div class="col text-center">
       <div class="card pt-3">
-        <img src="../../../assets/banner.png" class="banner">
+        <img src="../../../assets/banner.png" class="banner" alt="banner">
         <h5>Be safe!</h5>
       </div>
     </div>
@@ -34,8 +37,9 @@
     </div>
   </div>
   <div class="row my-5">
-    <div class="col-9 d-grid"> 
-      <button type="button" class="btn btn-primary" [disabled]="!jobsResponse" (click)="onRequestJobButtonClick()">Request Job</button>
+    <div class="col-8 d-grid">
+      <button type="button" class="btn btn-primary" [disabled]="!jobsResponse"
+        (click)="onRequestJobButtonClick()">Request Job</button>
     </div>
     <div class="col-3 d-grid">
       <button type="button" class="btn btn-secondary" (click)="onRefreshJobList()">Refresh</button>

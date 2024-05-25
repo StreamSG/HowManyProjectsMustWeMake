@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription, take, takeUntil } from 'rxjs';
 
 import { JobData, JobsResponse } from 'src/app/models/jobs-response.model';
@@ -6,24 +6,30 @@ import { WeatherAlertResponse } from 'src/app/models/weather-alert.model';
 import { JobService } from 'src/app/services/job.service';
 import { WeatherService } from 'src/app/services/weather.service';
 
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit, OnDestroy {
+
+  @Input() safetyDocumentUpdated: boolean;
+
   public weatherAlertResponse: WeatherAlertResponse;
   public jobsResponse: JobsResponse;
   private techUUID: string;
   private jobServiceSubscription: Subscription;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   private jobCount: number;
-  
+
+
   constructor(private weatherService: WeatherService, private jobService: JobService) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.techUUID = 'mw224g'; // TODO - Make part of a sort of "login" feature. Aaron is working on this I believe, possibly a sort of modal.
     this.jobsResponse = this.jobService.getResults();
+    this.safetyDocumentUpdated = true; // This is a boolean that will be used to determine if the safety document has been updated. This will be used to display an alert to the user on the homepage view using newSafetyDocumentUpdate component. (Chris)
     if (!this.jobsResponse) { // don't call the api if it already has data
       this.callJobServiceJobs(this.techUUID);
     }
@@ -48,7 +54,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * @description For use in html when the refresh button is clicked. Will call JobService 
+   * @description For use in html when the refresh button is clicked. Will call JobService
    * @returns {void}
    */
   public onRefreshJobList(): void {
@@ -69,7 +75,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
           this.jobsResponse = this.jobService.getResults();
           this.calculateJobCount();
           // Putting this here is bad practice, you shouldn't string calls together! We should talk about how to fix long term. I'm fine leaving it in for now.
-          this.callAndSubscribeToWeatherService(); 
+          this.callAndSubscribeToWeatherService();
         }
       }
     });
@@ -77,7 +83,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   /**
    * @description Calls the job list api, passing the tech uuid, which invoke a response from the api containing a list of jobs procedurally generated from the given uuid. Also subscribes to the service for when the response comes through
-   * @param {string} uuid The uuid for the tech for which to retrieve the job list. 
+   * @param {string} uuid The uuid for the tech for which to retrieve the job list.
    * @returns {void}
    */
   private callJobServiceJobs(uuid: string): void {
@@ -93,7 +99,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
    */
   private callAndSubscribeToWeatherService(): void {
     const jobList = this.jobsResponse.getJobs();
-    if (Array.isArray(jobList) && jobList.length > 0) { // only want to make this call if there are 
+    if (Array.isArray(jobList) && jobList.length > 0) { // only want to make this call if there are
       this.weatherService.call(jobList[0].location.lat, jobList[0].location.long); // calls with first assigned job cause alerts should be similar to the area
       this.weatherService.getLoading().pipe(take(2), takeUntil(this.ngUnsubscribe)).subscribe({
         next: (loading: boolean) => {
