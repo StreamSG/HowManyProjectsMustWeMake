@@ -9,7 +9,7 @@
   .container {
     width: 90%;
     height: auto;
-    border: 8px dashed red;
+    border: 0.5rem dashed red;
     border-radius: 3px;
     margin: 10px auto;
   }
@@ -20,7 +20,7 @@
     font-size: 4em;
   }
 
-  h5 {
+  .safetyDocumentTitle {
     font-weight: bold;
 
   }
